@@ -55,11 +55,6 @@ stocks['NBA']['Chicago Bulls: United Airlines']['ticker'] ='UAL'
 stocks['NBA']['Utah Jazz: Vivint']['ticker'] ='VVNT'
 stocks['NBA']['Philadelphia 76ers: Wells Fargo']['ticker'] ='WFC'
 
-#stocks['MLB']['Tampa Bay Buccaneers: Raymond James Financial']['ticker'] = 'RJF'
-#stocks['MLB']['LA Rams/Chargers: SoFi Technologies Inc']['ticker'] = 'SOFI'
-#stocks['MLB']['Minnesota Vikings: US Bancorp']['ticker'] = 'USB'
-
-
 # collect data
 for league in stocks:
     for stadium in stocks[league]:
@@ -95,6 +90,9 @@ condensed_df.sort_values(by='rel to S&P 500', inplace=True)
 
 print(condensed_df)
 
+n = condensed_df.shape[0]
+n_bad =  np.sum(condensed_df['rel to S&P 500'] < 0)
+print('%i of %i (%0.2f %%) perform worse than market' % (n_bad, n, n_bad/n*100))
 
 
 fig, ax = plt.subplots()
@@ -109,11 +107,8 @@ for i, j in colors.items(): #Loop over color dictionary
 
 ax.set_yticks(range(n), labels=condensed_df.index.values.tolist())
 ax.invert_yaxis()
-ax.set_title('3-Year Performance Relative to S&P 500')
+ax.set_title('3-Year Performance Relative to S&P 500 (%s to %s)' % (start_epoch,end_epoch))
 ax.legend()
-
-
-
 plt.tight_layout()
 plt.show()
 
