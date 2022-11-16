@@ -102,7 +102,6 @@ print('Average relative to S&P 500: %0.2f %%' % avg_performance)
 
 # make a barchart
 fig, ax = plt.subplots()
-n = condensed_df.shape[0]
 colors = {'NFL':'red', 'NBA': 'blue'}
 c = condensed_df['league'].apply(lambda x: colors[x])
 ax.barh(range(n), condensed_df['rel to S&P 500'], color=c)
@@ -114,6 +113,7 @@ for i, j in colors.items(): #Loop over color dictionary
 ax.set_yticks(range(n), labels=condensed_df.index.values.tolist())
 ax.invert_yaxis()
 ax.set_title('3-Year Performance Relative to S&P 500 (%s to %s)' % (start_epoch,end_epoch))
+ax.set_xlabel('Percentage relative to S&P 500')
 ax.legend()
 plt.tight_layout()
 plt.show()
