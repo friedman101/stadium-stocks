@@ -43,7 +43,7 @@ stocks['NBA']['Golden State Warriors: JPMorgan Chase & Co']['ticker'] = 'JPM'
 stocks['NBA']['LA Clippers/Lakers: Crypto dot com']['ticker'] = 'CRCW'
 stocks['NBA']['Memphis Grizzlies: FedEx']['ticker'] = 'FDX'
 stocks['NBA']['Milwaukee Bucks: Fiserv Inc']['ticker'] = 'FISV'
-stocks['NBA']['Miami Heat: FTX']['ticker'] = -100
+stocks['NBA']['Miami Heat: FTX']['percentage change'] = -100
 stocks['NBA']['Oklahoma City Thunder: Paycom Software Inc']['ticker'] ='PAYC'
 stocks['NBA']['Cleveland Cavaliers: Rocket Mortgage']['ticker'] ='RKT'
 stocks['NBA']['Toronto Raptors: Scotiabank']['ticker'] ='BNS'
@@ -58,14 +58,14 @@ stocks['NBA']['Philadelphia 76ers: Wells Fargo']['ticker'] ='WFC'
 # collect data
 for league in stocks:
     for stadium in stocks[league]:
-        ticker = stocks[league][stadium]['ticker']
-        if type(ticker) == str:
+        if 'ticker' in stocks[league][stadium]:
+            ticker = stocks[league][stadium]['ticker']
             data = yf.download([ticker], start=start_epoch, end=end_epoch, group_by='ticker')
             start_price = data.iloc[0]['Open']
             end_price = data.iloc[-1]['Open']
             pct_change = (end_price-start_price)/start_price*100
         else:
-            pct_change = ticker
+            pct_change = stocks[league][stadium]['percentage change']
         stocks[league][stadium]['percentage change'] = pct_change
 
 # condense data
