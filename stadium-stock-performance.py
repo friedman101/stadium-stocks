@@ -17,6 +17,7 @@ stocks['benchmark']['S&P 500']['ticker'] = '^GSPC'
 # NFL
 stocks['NFL']['Las Vegas Raiders: Allegiant Travel Company']['ticker'] = 'ALGT'
 stocks['NFL']['Dallas Cowboys: AT&T']['ticker'] = 'T'
+stocks['NFL']['Carolina Panthers: Bank of America']['ticker'] = 'BAC'
 stocks['NFL']['New Orleans Saints: Caesars']['ticker'] = 'CZR'
 stocks['NFL']['Washington Commanders: FedEx']['ticker'] = 'FDX'
 stocks['NFL']['Cleveland Browns: FirstEnergy']['ticker'] = 'FE'
@@ -95,7 +96,9 @@ print(condensed_df)
 # print aggregate performance
 n = condensed_df.shape[0]
 n_bad =  np.sum(condensed_df['rel to S&P 500'] < 0)
+avg_performance = np.mean(condensed_df['rel to S&P 500'])
 print('%i of %i (%0.2f %%) perform worse than market' % (n_bad, n, n_bad/n*100))
+print('Average relative to S&P 500: %0.2f %%' % avg_performance)
 
 # make a barchart
 fig, ax = plt.subplots()
