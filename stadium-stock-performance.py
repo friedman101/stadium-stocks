@@ -34,6 +34,7 @@ stocks['NFL']['Tampa Bay Buccaneers: Raymond James Financial']['ticker'] = 'RJF'
 stocks['NFL']['LA Rams/Chargers: SoFi Technologies Inc']['ticker'] = 'SOFI'
 stocks['NFL']['Minnesota Vikings: US Bancorp']['ticker'] = 'USB'
 
+# NBA
 stocks['NBA']['Dallas Mavericks: American Airlines']['ticker'] = 'AAL'
 stocks['NBA']['San Antonio Spurs: AT&T']['ticker'] = 'T'
 stocks['NBA']['Denver Nuggets: Ball Corporation']['ticker'] = 'BALL'
@@ -68,9 +69,8 @@ for league in stocks:
             pct_change = stocks[league][stadium]['percentage change']
         stocks[league][stadium]['percentage change'] = pct_change
 
-# condense data
+# condense data into a table
 condensed_df = pd.DataFrame()
-
 for league in stocks:
     if league == 'benchmark':
         continue
@@ -86,15 +86,18 @@ for league in stocks:
         row = pd.DataFrame(row_dict,index=[stadium])
         condensed_df = pd.concat([condensed_df,row],axis=0)
 
+# sort by performance
 condensed_df.sort_values(by='rel to S&P 500', inplace=True)
 
+# print the table
 print(condensed_df)
 
+# print aggregate performance
 n = condensed_df.shape[0]
 n_bad =  np.sum(condensed_df['rel to S&P 500'] < 0)
 print('%i of %i (%0.2f %%) perform worse than market' % (n_bad, n, n_bad/n*100))
 
-
+# make a barchart
 fig, ax = plt.subplots()
 n = condensed_df.shape[0]
 colors = {'NFL':'red', 'NBA': 'blue'}
